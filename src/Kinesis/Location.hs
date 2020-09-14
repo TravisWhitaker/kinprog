@@ -191,185 +191,185 @@ data Location = Escape
               | KPRPedal
               deriving (Eq, Ord, Show, Enum, Bounded)
 
-tok :: BS.ByteString -> Location -> A.Parser Location
-tok n a = A.stringCI n *> pure a
+tok :: Char -> BS.ByteString -> Location -> A.Parser Location
+tok t n a = A.stringCI n *> A.char t *> pure a
 
-parseLocation :: A.Parser Location
-parseLocation = asum
-    [ tok "escape" Escape
-    , tok "F1" F1
-    , tok "F2" F2
-    , tok "F3" F3
-    , tok "F4" F4
-    , tok "F5" F5
-    , tok "F6" F6
-    , tok "F7" F7
-    , tok "F8" F8
-    , tok "F9" F9
-    , tok "F10" F10
-    , tok "F11" F11
-    , tok "F12" F12
-    , tok "prtscr" PrtScr
-    , tok "scroll" ScrollLock
-    , tok "pause" Pause
-    , tok "=" Equals
-    , tok "1" One
-    , tok "2" Two
-    , tok "3" Three
-    , tok "4" Four
-    , tok "5" Five
-    , tok "6" Six
-    , tok "7" Seven
-    , tok "8" Eight
-    , tok "9" Nine
-    , tok "0" Zero
-    , tok "hyphen" Hyphen
-    , tok "tab" Tab
-    , tok "q" Q
-    , tok "w" W
-    , tok "e" E
-    , tok "r" R
-    , tok "t" T
-    , tok "y" Y
-    , tok "u" U
-    , tok "i" I
-    , tok "o" O
-    , tok "p" P
-    , tok "\\" Backslash
-    , tok "caps" CapsLock
-    , tok "a" A
-    , tok "s" S
-    , tok "d" D
-    , tok "f" F
-    , tok "g" G
-    , tok "h" H
-    , tok "j" J
-    , tok "k" K
-    , tok "l" L
-    , tok ";" Colon
-    , tok "'" Quote
-    , tok "lshift" LShift
-    , tok "z" Z
-    , tok "x" X
-    , tok "c" C
-    , tok "v" V
-    , tok "b" B
-    , tok "n" N
-    , tok "m" M
-    , tok "," Comma
-    , tok "." Period
-    , tok "/" Slash
-    , tok "rshift" RShift
-    , tok "`" Grave
-    , tok "intl-\\" Intl
-    , tok "left" Left
-    , tok "right" Right
-    , tok "up" Up
-    , tok "down" Down
-    , tok "obrack" OpenBrack
-    , tok "cbrack" CloseBrack
-    , tok "lctrl" LCtrl
-    , tok "lalt" LAlt
-    , tok "bspace" Backspace
-    , tok "delete" Delete
-    , tok "home" Home
-    , tok "end" End
-    , tok "rwin" RSuper
-    , tok "rctrl" RCtrl
-    , tok "pup" PageUp
-    , tok "pdown" PageDown
-    , tok "enter" Enter
-    , tok "space" Space
-    , tok "lp-tab" LPedal
-    , tok "mp-kpshf" MPedal
-    , tok "rp-kpent" RPedal
-    , tok "kp-escape" KPEscape
-    , tok "kp-lwin" KPLSuper
-    , tok "kp-ralt" KPRAlt
-    , tok "menu" Menu
-    , tok "play" Play
-    , tok "prev" Prev
-    , tok "next" Next
-    , tok "calc" Calc
-    , tok "kpshft" KPShift
-    , tok "kp-f9" KPF9
-    , tok "kp-f10" KPF10
-    , tok "kp-f11" KPF11
-    , tok "kp-f12" KPF12
-    , tok "mute" Mute
-    , tok "vol-" VolMinus
-    , tok "vol+" VolPlus
-    , tok "kp-=" KPEquals
-    , tok "kp-1" KPOne
-    , tok "kp-2" KPTwo
-    , tok "kp-3" KPThree
-    , tok "kp-4" KPFour
-    , tok "kp-5" KPFive
-    , tok "kp-6" KPSix
-    , tok "numlk" NumLock
-    , tok "kp=" KPNPEquals
-    , tok "kpdiv" KPNPDiv
-    , tok "kpmult" KPNPMult
-    , tok "kp-hyphen" KPHyphen
-    , tok "kp-tab" KPTab
-    , tok "kp-q" KPQ
-    , tok "kp-w" KPW
-    , tok "kp-e" KPE
-    , tok "kp-r" KPR
-    , tok "kp-t" KPT
-    , tok "kp-y" KPY
-    , tok "kp7" KPNPSeven
-    , tok "kp8" KPNPEight
-    , tok "kp9" KPNPNine
-    , tok "kpmin" KPNPMinus
-    , tok "kp-\\" KPBackslash
-    , tok "kp-caps" KPCapsLock
-    , tok "kp-a" KPA
-    , tok "kp-s" KPS
-    , tok "kp-d" KPD
-    , tok "kp-f" KPF
-    , tok "kp-g" KPG
-    , tok "kp-h" KPH
-    , tok "kp4" KPNPFour
-    , tok "kp5" KPNPFive
-    , tok "kp6" KPNPSix
-    , tok "kp7" KPPlus
-    , tok "kp-'" KPQuote
-    , tok "kp-lshift" KPLShift
-    , tok "kp-z" KPZ
-    , tok "kp-x" KPX
-    , tok "kp-c" KPC
-    , tok "kp-v" KPV
-    , tok "kp-b" KPB
-    , tok "kp-n" KPN
-    , tok "kp1" KPNPOne
-    , tok "kp2" KPNPTwo
-    , tok "kp3" KPNPThree
-    , tok "kpenter1" KPEnter1
-    , tok "kp-rshift" KPRShift
-    , tok "kp-`" KPGrave
-    , tok "kp-insert" KPInsert
-    , tok "kp-left" KPLeft
-    , tok "kp-right" KPRight
-    , tok "kp-up" KPUp
-    , tok "kp-down" KPDown
-    , tok "kp." KPPeriod
-    , tok "kpenter2" KPEnter2
-    , tok "kp-lctrl" KPLCtrl
-    , tok "kp-lalt" KPLAlt
-    , tok "kp-bspace" KPBackspace
-    , tok "kp-delete" KPDelete
-    , tok "kp-home" KPHome
-    , tok "kp-end" KPEnd
-    , tok "kp-rwin" KPRSuper
-    , tok "kp-rctrl" KPRCtrl
-    , tok "kp-pup" KPPageUp
-    , tok "kp-pdown" KPPageDown
-    , tok "kp-enter" KPEnter
-    , tok "kp0" KPNPZero
-    , tok "kp-lp-tab" KPLPedal
-    , tok "kp-mp-kpshf" KPMPedal
-    , tok "kp-rp-kpent" KPRPedal
+parseLocation :: Char -> A.Parser Location
+parseLocation t = asum
+    [ tok t "escape" Escape
+    , tok t "F1" F1
+    , tok t "F2" F2
+    , tok t "F3" F3
+    , tok t "F4" F4
+    , tok t "F5" F5
+    , tok t "F6" F6
+    , tok t "F7" F7
+    , tok t "F8" F8
+    , tok t "F9" F9
+    , tok t "F10" F10
+    , tok t "F11" F11
+    , tok t "F12" F12
+    , tok t "prtscr" PrtScr
+    , tok t "scroll" ScrollLock
+    , tok t "pause" Pause
+    , tok t "=" Equals
+    , tok t "1" One
+    , tok t "2" Two
+    , tok t "3" Three
+    , tok t "4" Four
+    , tok t "5" Five
+    , tok t "6" Six
+    , tok t "7" Seven
+    , tok t "8" Eight
+    , tok t "9" Nine
+    , tok t "0" Zero
+    , tok t "hyphen" Hyphen
+    , tok t "tab" Tab
+    , tok t "q" Q
+    , tok t "w" W
+    , tok t "e" E
+    , tok t "r" R
+    , tok t "t" T
+    , tok t "y" Y
+    , tok t "u" U
+    , tok t "i" I
+    , tok t "o" O
+    , tok t "p" P
+    , tok t "\\" Backslash
+    , tok t "caps" CapsLock
+    , tok t "a" A
+    , tok t "s" S
+    , tok t "d" D
+    , tok t "f" F
+    , tok t "g" G
+    , tok t "h" H
+    , tok t "j" J
+    , tok t "k" K
+    , tok t "l" L
+    , tok t ";" Colon
+    , tok t "'" Quote
+    , tok t "lshift" LShift
+    , tok t "z" Z
+    , tok t "x" X
+    , tok t "c" C
+    , tok t "v" V
+    , tok t "b" B
+    , tok t "n" N
+    , tok t "m" M
+    , tok t "," Comma
+    , tok t "." Period
+    , tok t "/" Slash
+    , tok t "rshift" RShift
+    , tok t "`" Grave
+    , tok t "intl-\\" Intl
+    , tok t "left" Left
+    , tok t "right" Right
+    , tok t "up" Up
+    , tok t "down" Down
+    , tok t "obrack" OpenBrack
+    , tok t "cbrack" CloseBrack
+    , tok t "lctrl" LCtrl
+    , tok t "lalt" LAlt
+    , tok t "bspace" Backspace
+    , tok t "delete" Delete
+    , tok t "home" Home
+    , tok t "end" End
+    , tok t "rwin" RSuper
+    , tok t "rctrl" RCtrl
+    , tok t "pup" PageUp
+    , tok t "pdown" PageDown
+    , tok t "enter" Enter
+    , tok t "space" Space
+    , tok t "lp-tab" LPedal
+    , tok t "mp-kpshf" MPedal
+    , tok t "rp-kpent" RPedal
+    , tok t "kp-escape" KPEscape
+    , tok t "kp-lwin" KPLSuper
+    , tok t "kp-ralt" KPRAlt
+    , tok t "menu" Menu
+    , tok t "play" Play
+    , tok t "prev" Prev
+    , tok t "next" Next
+    , tok t "calc" Calc
+    , tok t "kpshft" KPShift
+    , tok t "kp-f9" KPF9
+    , tok t "kp-f10" KPF10
+    , tok t "kp-f11" KPF11
+    , tok t "kp-f12" KPF12
+    , tok t "mute" Mute
+    , tok t "vol-" VolMinus
+    , tok t "vol+" VolPlus
+    , tok t "kp-=" KPEquals
+    , tok t "kp-1" KPOne
+    , tok t "kp-2" KPTwo
+    , tok t "kp-3" KPThree
+    , tok t "kp-4" KPFour
+    , tok t "kp-5" KPFive
+    , tok t "kp-6" KPSix
+    , tok t "numlk" NumLock
+    , tok t "kp=" KPNPEquals
+    , tok t "kpdiv" KPNPDiv
+    , tok t "kpmult" KPNPMult
+    , tok t "kp-hyphen" KPHyphen
+    , tok t "kp-tab" KPTab
+    , tok t "kp-q" KPQ
+    , tok t "kp-w" KPW
+    , tok t "kp-e" KPE
+    , tok t "kp-r" KPR
+    , tok t "kp-t" KPT
+    , tok t "kp-y" KPY
+    , tok t "kp7" KPNPSeven
+    , tok t "kp8" KPNPEight
+    , tok t "kp9" KPNPNine
+    , tok t "kpmin" KPNPMinus
+    , tok t "kp-\\" KPBackslash
+    , tok t "kp-caps" KPCapsLock
+    , tok t "kp-a" KPA
+    , tok t "kp-s" KPS
+    , tok t "kp-d" KPD
+    , tok t "kp-f" KPF
+    , tok t "kp-g" KPG
+    , tok t "kp-h" KPH
+    , tok t "kp4" KPNPFour
+    , tok t "kp5" KPNPFive
+    , tok t "kp6" KPNPSix
+    , tok t "kp7" KPPlus
+    , tok t "kp-'" KPQuote
+    , tok t "kp-lshift" KPLShift
+    , tok t "kp-z" KPZ
+    , tok t "kp-x" KPX
+    , tok t "kp-c" KPC
+    , tok t "kp-v" KPV
+    , tok t "kp-b" KPB
+    , tok t "kp-n" KPN
+    , tok t "kp1" KPNPOne
+    , tok t "kp2" KPNPTwo
+    , tok t "kp3" KPNPThree
+    , tok t "kpenter1" KPEnter1
+    , tok t "kp-rshift" KPRShift
+    , tok t "kp-`" KPGrave
+    , tok t "kp-insert" KPInsert
+    , tok t "kp-left" KPLeft
+    , tok t "kp-right" KPRight
+    , tok t "kp-up" KPUp
+    , tok t "kp-down" KPDown
+    , tok t "kp." KPPeriod
+    , tok t "kpenter2" KPEnter2
+    , tok t "kp-lctrl" KPLCtrl
+    , tok t "kp-lalt" KPLAlt
+    , tok t "kp-bspace" KPBackspace
+    , tok t "kp-delete" KPDelete
+    , tok t "kp-home" KPHome
+    , tok t "kp-end" KPEnd
+    , tok t "kp-rwin" KPRSuper
+    , tok t "kp-rctrl" KPRCtrl
+    , tok t "kp-pup" KPPageUp
+    , tok t "kp-pdown" KPPageDown
+    , tok t "kp-enter" KPEnter
+    , tok t "kp0" KPNPZero
+    , tok t "kp-lp-tab" KPLPedal
+    , tok t "kp-mp-kpshf" KPMPedal
+    , tok t "kp-rp-kpent" KPRPedal
     ]
 
 locationTok :: Location -> BS.ByteString
